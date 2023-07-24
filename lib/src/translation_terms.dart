@@ -10,20 +10,20 @@ import 'package:glob/list_local_fs.dart';
 ///
 Set<Term> getTranslationTerms() {
   final path = Directory.current.path;
-  final arbFile = Glob("$path/**.arb");
-  final arbFiles = arbFile.listSync(followLinks: false);
+  final jsonFile = Glob("$path/assets/flutter-i18n/en.json");
+  final jsonFiles = jsonFile.listSync(followLinks: false);
 
-  final arbTerms = <Term>{};
+  final jsonTerms = <Term>{};
 
-  for (final file in arbFiles) {
+  for (final file in jsonFiles) {
     final content = File(file.path).readAsStringSync();
     final map = jsonDecode(content) as Map<String, dynamic>;
     for (final entry in map.entries) {
       if (!entry.key.startsWith('@')) {
         final hasAttribute = map.containsKey('@${entry.key}');
-        arbTerms.add(Term(additionalAttributes: hasAttribute, key: entry.key));
+        jsonTerms.add(Term(additionalAttributes: hasAttribute, key: entry.key));
       }
     }
   }
-  return arbTerms;
+  return jsonTerms;
 }

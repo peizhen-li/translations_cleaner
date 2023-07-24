@@ -16,9 +16,9 @@ Set<Term> findUnusedTerms() {
 
   for (final file in dartFiles) {
     final content = File(file.path).readAsStringSync();
-    for (final arb in terms) {
-      if (content.contains(arb.key)) {
-        unusedTerms.remove(arb);
+    for (final term in terms) {
+      if (content.contains(term.key)) {
+        unusedTerms.remove(term);
       }
     }
   }
